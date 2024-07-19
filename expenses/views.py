@@ -64,3 +64,9 @@ class ExpenseListView(ListView):
 class CategoryListView(ListView):
     model = Category
     paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        queryset = Expense.objects.all()
+        print(queryset)
+
+        return super().get_context_data(summary_per_category=summary_per_category(queryset))
