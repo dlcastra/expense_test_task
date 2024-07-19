@@ -51,9 +51,6 @@ class ExpenseListView(ListView):
                     F(valid_sort_fields[sort_by]).asc() if order == "asc" else F(valid_sort_fields[sort_by]).desc()
                 )
 
-        summary = summary_per_category(queryset)
-        self.request.session['summary_per_category'] = summary
-
         return super().get_context_data(
             form=form,
             object_list=queryset,
