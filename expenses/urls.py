@@ -3,8 +3,8 @@ from django.urls import path, reverse_lazy
 from .models import Expense, Category
 from .views import ExpenseListView, CategoryListView
 
-
 urlpatterns = [
+    # --- EXPENSES CRUD URLS: list, create, edit, delete ---
     path("expense/list/", ExpenseListView.as_view(), name="expense-list"),
     path(
         "expense/create/",
@@ -33,6 +33,7 @@ urlpatterns = [
         ),
         name="expense-delete",
     ),
+    # --- CATEGORIES CRUD URLS: list, create, edit, delete ---
     path("category/list/", CategoryListView.as_view(), name="category-list"),
     path(
         "category/create/",
@@ -43,6 +44,16 @@ urlpatterns = [
             template_name="generic_update.html",
         ),
         name="category-create",
+    ),
+    path(
+        "category/<int:pk>/edit/",
+        UpdateView.as_view(
+            model=Category,
+            fields="__all__",
+            success_url=reverse_lazy("expenses:category-list"),
+            template_name="generic_update.html",
+        ),
+        name="category-edit",
     ),
     path(
         "category/<int:pk>/delete/",
